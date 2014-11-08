@@ -9,13 +9,10 @@
   "author": "Paul Sweeney <paul@8-bitdesign.com>",
   "license": "ISC",
   "dependencies": {
-    "async": "^0.9.0",
     "canvas": "^1.1.6",
     "express": "^4.10.1",
     "hjs": "0.0.6",
-    "request": "^2.47.0"
-  },
-  "devDependencies": {
+    "request": "^2.47.0",
     "dotenv": "^0.4.0"
   }
 }
