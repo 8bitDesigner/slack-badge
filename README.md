@@ -3,7 +3,7 @@ Do you want to make it easier for your friends and coworkers to hit you up on [S
 
 Just ping `http://slack-badge.herokuapp.com/users/<username>.png` to get your very own badge. Or, go to [http://slack-badge.herokuapp.com](http://slack-badge.herokuapp.com/) to try out the slack badge generator.
 
-[![Find me on Slack!](http://slack-badge.herokuapp.com/users/<username>.png)](https://fullscreen.slack.com/messages/@<username>)
+[![Find me on Slack!](http://slack-badge.herokuapp.com/users/paulsweeney.png)](https://fullscreen.slack.com/messages/@paulsweeney)
 
 ## Developing locally
 1. Copy `.env.example` to `.env`
