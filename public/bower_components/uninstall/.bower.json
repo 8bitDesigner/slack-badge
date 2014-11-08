@@ -1,0 +1,14 @@
+{
+  "name": "uninstall",
+  "homepage": "https://github.com/georgekosmidis/jquery-hashchange",
+  "_release": "acb5dc6a2f",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "acb5dc6a2f8be519fe9f0cd51a5bfe529a948a83"
+  },
+  "_source": "git://github.com/georgekosmidis/jquery-hashchange.git",
+  "_target": "*",
+  "_originalSource": "uninstall",
+  "_direct": true
+}

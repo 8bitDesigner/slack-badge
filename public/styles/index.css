@@ -1,0 +1,19 @@
+body {
+  padding-top: 70px;
+}
+
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.form-control.embed {
+  display: block;
+  width: 100%;
+  cursor: text;
+}
+
+.new-badge {
+  width: 30%;
+  margin: 0 auto;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Slack Badge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="/styles/index.css">
+</head>
+
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Slack Badges</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="jumbotron">
+      <h1>Slack Badges!</h1>
+      <p>Do you want to make it easier for your friends and coworkers to hit you up on <a href="https://slack.com/">Slack</a>? Will now you can!
+      <p>With a <strong>Slack Badge&trade;</strong> you can now drop a link to your chat session on slack into emails, documents, and more!
+    </div>
+
+    <div class="page-header">
+      <h1>Getting started</h1>
+
+      <form class="row" role="form">
+
+        <div class="col-xs-4">
+          {{{ badge }}}
+        </div>
+
+        <div class="col-xs-8">
+          <div class="form-group">
+            <label>Embed with:</label>
+            <input class="form-control embed" value="{{ anchorExample }}" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Or in Markdown:</label>
+            <input class="form-control embed" value="{{ mdExample }}" disabled>
+          </div>
+        </div>
+      </form>
+
+      <h1>I'm lazy, make one for me!</h1>
+
+      <form class="form-horizontal new-badge" role="form">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input class="form-control username" placeholder="Your username">
+          </div>
+        </div>
+      </form>
+
+      <div class="created-badge">
+      </div>
+    </div>
+  </div>
+
+  <script type="text/tmpl" id="badge-tmpl">
+    <div class='row'>
+      <div class='col-xs-4'>
+        <%= anchorBadge %>
+      </div>
+      <div class='col-xs-8'>
+        <div class='form-group'>
+          <label>Embed with:</label>
+          <input class='form-control embed' value='<%= anchorBadge %>' disabled>
+        </div>
+        <div class='form-group'>
+          <label>Or in Markdown:</label>
+          <input class='form-control embed' value='<%= markdownBadge %>' disabled>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="/bower_components/underscore/underscore-min.js"></script>
+  <script src="/scripts/index.js"></script>
+</body>
+</html>
+
