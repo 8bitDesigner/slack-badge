@@ -30,17 +30,25 @@ function drawUser(req, res, next) {
 }
 
 app.get('/', function(req, res) {
+  var paulUser = {
+    name: 'paulsweeney',
+    profile: {
+      first_name: 'Paul',
+      last_name: 'Sweeney'
+    }
+  }
+
   res.render('index', {
-    anchorExample: linkUtils.userAnchor('<username>'),
-    mdExample: linkUtils.userMarkdown('<username>'),
-    badge: linkUtils.userAnchor('paulsweeney')
+    anchorExample: linkUtils.userAnchor({name: '<username>'}),
+    mdExample: linkUtils.userMarkdown({name: '<username>'}),
+    badge: linkUtils.userAnchor(paulUser)
   })
 })
 
 app.get('/users/:name.json', getUser, function(req, res) {
   res.send({
-    anchorBadge: linkUtils.userAnchor(res.user.name),
-    markdownBadge: linkUtils.userMarkdown(res.user.name),
+    anchorBadge: linkUtils.userAnchor(res.user),
+    markdownBadge: linkUtils.userMarkdown(res.user),
   })
 })
 
