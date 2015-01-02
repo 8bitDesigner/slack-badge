@@ -1,6 +1,7 @@
 require('dotenv').load() // Load env variables
 
 var express = require('express')
+  , cache = new (require("node-cache"))()
   , path = require('path')
   , port = process.env.PORT || 3000
   , app = express()
@@ -8,22 +9,85 @@ var express = require('express')
   , slack = require('./lib/slack')
   , linkUtils = require('./lib/link-utils.js')
 
+var ttls = {
+  users: 604800, // one week
+  presence: 900 // 15 minutes
+}
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
 
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0
+}
+
+function fetchUsers(cb) {
+  var users = cache.get('users').users
+
+  if (users) {
+    console.log('found users from cache!')
+    cb(null, users)
+  } else {
+    slack.user.list(function(err, users) {
+      if (err) {
+        cb(err, null)
+      } else {
+        console.log('found users from network!')
+        cache.set('users', users, ttls.users)
+        cb(null, users)
+      }
+    })
+  }
+}
+
+function fetchUser(username, cb) {
+  function findUser(name, list) {
+    return list.filter(function(u) { return u.name === name }).pop()
+  }
+
+  fetchUsers(function(err, users) {
+    if (err) {
+      cb(err, null)
+    } else {
+      cb(null, findUser(username, users))
+    }
+  })
+}
+
+function fetchPresence(id, cb) {
+  var key = id + ':presence'
+    , val = cache.get(key)[key]
+
+  if (val) {
+    console.log('found presence from cache!', key)
+    cb(null, val)
+  } else {
+    slack.user.presence(id, function(err, presence) {
+      if (err) {
+        cb(err, null)
+      } else {
+        console.log('found presence from network!', key)
+        cache.set(key, presence, ttls.presence)
+        cb(null, presence)
+      }
+    })
+  }
+}
+
 function getUser(req, res, next) {
-  slack.user.infoByUsername(req.params.name, function(err, user) {
+  fetchUser(req.params.name, function(err, user) {
     if (!err && !user) {
       err = new Error('User "'+req.params.name+'" could not be found')
     }
+
     res.user = user
     next(err)
   })
 }
 
 function getPresence(req, res, next) {
-  slack.user.presence(res.user.id, function(err, presence) {
+  fetchPresence(res.user.id, function(err, presence) {
     res.user.presence = presence
     next(err)
   })
