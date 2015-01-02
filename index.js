@@ -26,14 +26,12 @@ function fetchUsers(cb) {
   var users = cache.get('users').users
 
   if (users) {
-    console.log('found users from cache!')
     cb(null, users)
   } else {
     slack.user.list(function(err, users) {
       if (err) {
         cb(err, null)
       } else {
-        console.log('found users from network!')
         cache.set('users', users, ttls.users)
         cb(null, users)
       }
@@ -60,14 +58,12 @@ function fetchPresence(id, cb) {
     , val = cache.get(key)[key]
 
   if (val) {
-    console.log('found presence from cache!', key)
     cb(null, val)
   } else {
     slack.user.presence(id, function(err, presence) {
       if (err) {
         cb(err, null)
       } else {
-        console.log('found presence from network!', key)
         cache.set(key, presence, ttls.presence)
         cb(null, presence)
       }
