@@ -22,6 +22,13 @@ function getUser(req, res, next) {
   })
 }
 
+function getPresence(req, res, next) {
+  slack.user.presence(res.user.id, function(err, presence) {
+    res.user.presence = presence
+    next(err)
+  })
+}
+
 function drawUser(req, res, next) {
   badger.draw(res.user, {width: 350, height: 60}, function(err, canvas) {
     res.canvas = canvas
@@ -32,6 +39,7 @@ function drawUser(req, res, next) {
 app.get('/', function(req, res) {
   var paulUser = {
     name: 'paulsweeney',
+    presence: 'active',
     profile: {
       first_name: 'Paul',
       last_name: 'Sweeney'
@@ -45,14 +53,14 @@ app.get('/', function(req, res) {
   })
 })
 
-app.get('/users/:name.json', getUser, function(req, res) {
+app.get('/users/:name.json', getUser, getPresence, function(req, res) {
   res.send({
     anchorBadge: linkUtils.userAnchor(res.user),
     markdownBadge: linkUtils.userMarkdown(res.user),
   })
 })
 
-app.get('/users/:name.png', getUser, drawUser, function(req, res) {
+app.get('/users/:name.png', getUser, getPresence, drawUser, function(req, res) {
   res.setHeader('content-type', 'image/png')
   res.canvas.pngStream().pipe(res)
 })
